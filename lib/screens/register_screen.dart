@@ -1,13 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaselearner/screens/login_screen.dart';
+import 'package:firebaselearner/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
    RegisterScreen({Key? key}) : super(key: key);
 
-  final _emailController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _setPasswordController = TextEditingController();
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
 
+class _RegisterScreenState extends State<RegisterScreen> {
+   bool isLoading = false;
+
+  final _emailController = TextEditingController();
+
+  final _confirmPasswordController = TextEditingController();
+
+  final _setPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +67,33 @@ class RegisterScreen extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
-                    onPressed: (){},
-                    child: const Text("SUBMIT",style: TextStyle(fontSize: 20),),
+                    onPressed: () async {
+                    setState((){
+                      isLoading = true;
+                    });
+                    try{
+                      if (_emailController.text.isNotEmpty &&
+                          _setPasswordController.text.isNotEmpty &&
+                          _setPasswordController.text ==
+                              _confirmPasswordController.text) {
+                        User? user = await AuthService().register(_emailController.text, _setPasswordController.text);
+                        if(user !=null){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully created user")));
+                          print("Success");
+                          print(user.email);
+                        }
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter correct credentials")));
+                      }
+                    }catch(e){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong try again later")));
+                    }finally{
+                      setState(() {
+                        isLoading= false;
+                      });
+                    }
+                    },
+                    child: isLoading ? const Center(child: CircularProgressIndicator(color: Colors.white),):const Text("SUBMIT",style: TextStyle(fontSize: 20),),
                 ),
               ),
               const SizedBox(height: 5,),
