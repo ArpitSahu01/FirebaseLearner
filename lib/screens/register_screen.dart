@@ -37,6 +37,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               TextField(
+                obscureText: true,
                 controller: _setPasswordController,
                 decoration: InputDecoration(
                   labelText: "Password",
@@ -46,6 +47,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               TextField(
+                obscureText: true,
                 controller: _confirmPasswordController,
                 decoration: InputDecoration(
                   labelText: "Confirm Password",
