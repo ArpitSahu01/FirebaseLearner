@@ -62,9 +62,9 @@ class RegisterScreen extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                     onPressed: () async{
-                    try{
+
                       if(_emailController.text.isNotEmpty && _setPasswordController.text.isNotEmpty &&_confirmPasswordController.text.isNotEmpty){
-                       User? user=  await AuthServices().resigerUser(_emailController.text, _setPasswordController.text);
+                       User? user=  await AuthServices().resigerUser(_emailController.text, _setPasswordController.text,context);
                        if(user != null){
                          print("Success");
                          print(user.email);
@@ -72,10 +72,6 @@ class RegisterScreen extends StatelessWidget {
                       }else{
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all the fields",),backgroundColor: Colors.redAccent,));
                       }
-                    }catch(e){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong try again later"),backgroundColor: Colors.redAccent,));
-                    }
-
                     },
                     child: const Text("SUBMIT",style: TextStyle(fontSize: 20),),
                 ),

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -45,7 +47,21 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
-                  onPressed: (){},
+                  onPressed: () async{
+
+                      if(_emailController.text.isNotEmpty && _setPasswordController.text.isNotEmpty){
+                        User? user = await AuthServices().login(_emailController.text, _setPasswordController.text,context);
+                        if(user != null){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signIn"),backgroundColor: Colors.redAccent,));
+                          print("User Email - ${user.email}");
+                          print("User id - ${user.uid}");
+                        }
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill all the fields'),backgroundColor: Colors.redAccent,));
+                      }
+
+
+                  },
                   child: const Text("LOGIN",style: TextStyle(fontSize: 20),),
                 ),
               ),
