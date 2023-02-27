@@ -3,13 +3,20 @@ import 'package:firebaselearner/screens/login_screen.dart';
 import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
    RegisterScreen({Key? key}) : super(key: key);
 
-  final _emailController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _setPasswordController = TextEditingController();
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
 
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _emailController = TextEditingController();
+
+  final _confirmPasswordController = TextEditingController();
+
+  final _setPasswordController = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +63,15 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30,),
-              Container(
+              isLoading? CircularProgressIndicator():Container(
                 width: MediaQuery.of(context).size.width-50,
                 height: 50,
                 child: ElevatedButton(
                   style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                     onPressed: () async{
-
+                    setState(() {
+                      isLoading=true;
+                    });
                       if(_emailController.text.isNotEmpty && _setPasswordController.text.isNotEmpty &&_confirmPasswordController.text.isNotEmpty){
                        User? user=  await AuthServices().resigerUser(_emailController.text, _setPasswordController.text,context);
                        if(user != null){
@@ -70,8 +79,12 @@ class RegisterScreen extends StatelessWidget {
                          print(user.email);
                        }
                       }else{
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all the fields",),backgroundColor: Colors.redAccent,));
                       }
+                    setState(() {
+                      isLoading=false;
+                    });
                     },
                     child: const Text("SUBMIT",style: TextStyle(fontSize: 20),),
                 ),

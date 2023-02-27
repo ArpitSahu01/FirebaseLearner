@@ -52,11 +52,13 @@ class LoginScreen extends StatelessWidget {
                       if(_emailController.text.isNotEmpty && _setPasswordController.text.isNotEmpty){
                         User? user = await AuthServices().login(_emailController.text, _setPasswordController.text,context);
                         if(user != null){
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signIn"),backgroundColor: Colors.redAccent,));
                           print("User Email - ${user.email}");
                           print("User id - ${user.uid}");
                         }
                       }else{
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill all the fields'),backgroundColor: Colors.redAccent,));
                       }
 

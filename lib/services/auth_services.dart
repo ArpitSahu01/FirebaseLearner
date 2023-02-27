@@ -14,9 +14,11 @@ class AuthServices{
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     }on FirebaseAuthException catch(e){
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message.toString()),backgroundColor: Colors.redAccent,));
     }
     catch(e){
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong try again later"),backgroundColor: Colors.redAccent,));
     }
 
@@ -30,9 +32,11 @@ class AuthServices{
           .signInWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     }on FirebaseAuthException catch(e){
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message.toString()),backgroundColor: Colors.redAccent,));
     }
     catch(e){
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong try again later"),backgroundColor: Colors.redAccent,));
     }
   }
