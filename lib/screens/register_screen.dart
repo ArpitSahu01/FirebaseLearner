@@ -6,8 +6,12 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Register"),),
-      
+      appBar: AppBar(
+        title: const Text("Register"),
+        centerTitle: true,
+        backgroundColor: Colors.orangeAccent,
+      ),
+
     );
   }
 }
