@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebaselearner/screens/add_note.dart';
+import 'package:firebaselearner/screens/edit_note.dart';
 import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -17,43 +19,29 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
         ],
         backgroundColor: Colors.pinkAccent,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(onPressed: () async{
-              CollectionReference users = firestore.collection('user');
-              // await users.add({
-              //   "name":"Arpit",
-              // });
-              await users.doc("user1").set({
-                'name':'Robot',
-              });
-            }, child: Text("Add data to firestore")),
-
-            ElevatedButton(onPressed: () async{
-              CollectionReference user = firestore.collection('user');
-              // QuerySnapshot allResult = await user.get();
-              // allResult.docs.forEach((DocumentSnapshot result) {
-              //     print(result.data());
-              // });
-              DocumentSnapshot result = await user.doc("user1").get();
-              print(result.data());
-
-              // user.doc("user1").snapshots().listen((result) {
-              //   print(result.data());
-              // });
-            }, child: const Text('Read data from firestore')),
-            ElevatedButton(onPressed: () async{
-              await firestore.collection("user").doc("user1").update({"name":"Arpit"});
-            }, child: Text("Update the data")),
-            ElevatedButton(onPressed: () async{
-              await firestore.collection("user").doc("user1").delete();
-            }, child: Text("Delete the data")),
-          ],
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) => AddNoteScreen()));
+        },
+        backgroundColor: Colors.orangeAccent,
+        child: Icon(Icons.add),
+      ),
+      body: ListView(
+        children: [
+          Card(
+            color: Colors.teal,
+            elevation: 5,
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+              title: Text("Build a new app ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),),
+              subtitle: Text("This is an amazing app to start adding your daily task which neather complete ever in your life",overflow: TextOverflow.ellipsis,maxLines: 2,),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>EditNoteScreen()));
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
