@@ -23,9 +23,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: StreamBuilder(
-        stream: AuthServices().firebaseAuth.authStateChanges(),
+        stream: AuthServices().firebaseAuth.authStateChanges().asBroadcastStream(),
         builder: (context,snapshot){
-          print(snapshot.data);
           if(snapshot.hasData){
             return HomeScreen();
           }
