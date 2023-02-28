@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebaselearner/screens/home_screen.dart';
 import 'package:firebaselearner/screens/login_screen.dart';
 import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                        User? user=  await AuthServices().resigerUser(_emailController.text, _setPasswordController.text,context);
                        if(user != null){
                          print("Success");
-                         print(user.email);
+                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx)=>HomeScreen()), (route) => false);
                        }
                       }else{
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();

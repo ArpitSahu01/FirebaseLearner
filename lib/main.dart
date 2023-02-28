@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebaselearner/screens/home_screen.dart';
 import 'package:firebaselearner/screens/login_screen.dart';
 import 'package:firebaselearner/screens/register_screen.dart';
+import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 void main() async{
@@ -20,7 +22,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterScreen(),
+      home: StreamBuilder(
+        stream: AuthServices().firebaseAuth.authStateChanges(),
+        builder: (context,snapshot){
+          if(snapshot.hasData){
+            return HomeScreen();
+          }
+          return RegisterScreen();
+        },
+      ),
     );
   }
 }
