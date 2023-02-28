@@ -1,3 +1,4 @@
+import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,7 +11,9 @@ class HomeScreen extends StatelessWidget {
         title: Text("HomeScreen"),
         centerTitle: true,
         actions: [
-          TextButton.icon(onPressed: (){}, icon: const Icon(Icons.exit_to_app,size: 30,), label: const Text("Sign out",style: TextStyle(fontSize: 15),),style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.white))),
+          TextButton.icon(onPressed: () async{
+            await AuthServices().signOut();
+          }, icon: const Icon(Icons.exit_to_app,size: 30,), label: const Text("Sign out",style: TextStyle(fontSize: 15),),style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Colors.white))),
         ],
         backgroundColor: Colors.pinkAccent,
       ),

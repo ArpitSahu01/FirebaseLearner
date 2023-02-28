@@ -98,7 +98,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20,),
               const Divider(),
               const SizedBox(height: 20,),
-              SignInButton(Buttons.Google,text: "Continues with Google" ,onPressed: (){},),
+              isLoading? CircularProgressIndicator():SignInButton(Buttons.Google,text: "Continues with Google" ,onPressed: () async{
+                setState(() {
+                  isLoading=true;
+                });
+                User? user = await AuthServices().signInWithGoogle();
+                if(user!= null){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signIn",),backgroundColor: Colors.redAccent,));
+                }
+                setState(() {
+                  isLoading=false;
+                });
+              },),
             ],
         ),
          ),
