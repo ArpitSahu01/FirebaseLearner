@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signIn"),backgroundColor: Colors.redAccent,));
                           print("User Email - ${user.email}");
                           print("User id - ${user.uid}");
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx)=>HomeScreen()), (route) => false);
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx)=>HomeScreen(user)), (route) => false);
                         }
                       }else{
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();

@@ -78,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                        User? user=  await AuthServices().resigerUser(_emailController.text, _setPasswordController.text,context);
                        if(user != null){
                          print("Success");
-                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx)=>HomeScreen()), (route) => false);
+                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx)=>HomeScreen(user)), (route) => false);
                        }
                       }else{
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();

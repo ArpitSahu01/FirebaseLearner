@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaselearner/screens/add_note.dart';
 import 'package:firebaselearner/screens/edit_note.dart';
 import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+
+  User? user;
+  HomeScreen(this.user);
+
 FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (ctx) => AddNoteScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) => AddNoteScreen(user)));
         },
         backgroundColor: Colors.orangeAccent,
         child: Icon(Icons.add),
