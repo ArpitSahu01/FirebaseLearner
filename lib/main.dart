@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         stream: AuthServices().firebaseAuth.authStateChanges(),
         builder: (context,snapshot){
           if(snapshot.hasData){
-            return HomeScreen();
+            return RegisterScreen();
           }
           return RegisterScreen();
         },

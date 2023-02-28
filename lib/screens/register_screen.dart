@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaselearner/screens/home_screen.dart';
 import 'package:firebaselearner/screens/login_screen.dart';
 import 'package:firebaselearner/services/auth_services.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -94,7 +95,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (ctx)=>LoginScreen()));
               }, child: const Text('Already Have an account? Login here')),
-
+              const SizedBox(height: 20,),
+              const Divider(),
+              const SizedBox(height: 20,),
+              SignInButton(Buttons.Google,text: "Continues with Google" ,onPressed: (){},),
             ],
         ),
          ),
