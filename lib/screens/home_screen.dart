@@ -34,13 +34,14 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("notes").where("userId",isEqualTo: user!.uid).snapshots(),
-          builder: (context,AsyncSnapshot snapshot){
+          builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
             if(snapshot.hasData){
 
-              if(snapshot.data.docs.length >0){
+              if(snapshot.data!.docs.length >0){
               return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context,index){
-                NoteModel note =NoteModel.fromJson(snapshot.data.docs.length[index]);
+                NoteModel note =NoteModel.fromJson(snapshot.data!.docs[index]);
                 return Card(
                   color: Colors.teal,
                   elevation: 5,
