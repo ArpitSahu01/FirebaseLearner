@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebaselearner/models/note.dart';
 import 'package:firebaselearner/screens/add_note.dart';
 import 'package:firebaselearner/screens/edit_note.dart';
 import 'package:firebaselearner/services/auth_services.dart';
@@ -31,22 +32,35 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
         backgroundColor: Colors.orangeAccent,
         child: Icon(Icons.add),
       ),
-      body: ListView(
-        children: [
-          Card(
-            color: Colors.teal,
-            elevation: 5,
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              title: Text("Build a new app ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),),
-              subtitle: Text("This is an amazing app to start adding your daily task which neather complete ever in your life",overflow: TextOverflow.ellipsis,maxLines: 2,),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>EditNoteScreen()));
-              },
-            ),
-          ),
-        ],
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("notes").where("userId",isEqualTo: user!.uid).snapshots(),
+          builder: (context,AsyncSnapshot snapshot){
+            if(snapshot.hasData){
+
+              if(snapshot.data.docs.length >0){
+              return ListView.builder(
+                  itemBuilder: (context,index){
+                NoteModel note =NoteModel.fromJson(snapshot.data.docs.length[index]);
+                return Card(
+                  color: Colors.teal,
+                  elevation: 5,
+                  margin: EdgeInsets.all(10),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                    title: Text(note.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                    subtitle: Text(note.description,overflow: TextOverflow.ellipsis,maxLines: 2,),
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>EditNoteScreen()));
+                    },
+                  ),
+                );
+              });
+              }
+            }else{
+              return Text('No data to show');
+            }
+            return Center(child: CircularProgressIndicator(),);
+          }
       ),
     );
   }
