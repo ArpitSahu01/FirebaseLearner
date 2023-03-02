@@ -33,7 +33,32 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red ,)),
+          IconButton(onPressed: () async{
+            try{
+              showDialog(context: context, builder: (BuildContext context){
+                return AlertDialog(
+                  title: Text("Please Confirm"),
+                  content: Text('Are you sure to delete the note?'),
+                  actions: [
+                    // Yes Button
+                    TextButton(onPressed: () async{
+                      await FirestoreService().deleteNote(widget.note.id);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+
+                    }, child: Text('Yes')),
+                    TextButton(onPressed: (){
+                      Navigator.of(context).pop();
+                    }, child: Text('No')),
+                  ],
+                );
+              });
+              await FirestoreService().deleteNote(widget.note.id);
+              Navigator.of(context).pop();
+            }catch(e){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong not able to delete.")));
+            }
+          }, icon: Icon(Icons.delete,color: Colors.red ,)),
         ],
       ),
       body: SingleChildScrollView(
