@@ -51,7 +51,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
                     title: Text(note.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                     subtitle: Text(note.description,overflow: TextOverflow.ellipsis,maxLines: 2,),
                     onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>EditNoteScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>EditNoteScreen(note)));
                     },
                   ),
                 );

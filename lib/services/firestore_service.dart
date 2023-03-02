@@ -17,4 +17,15 @@ class FirestoreService{
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong unable to add task")));
     }
   }
+
+  Future updateNote(String docId,String title,String description) async{
+    try{
+      await instance.collection("notes").doc(docId).update({
+        'title':title,
+        'description':description,
+      });
+    }catch(e){
+
+    }
+  }
 }
