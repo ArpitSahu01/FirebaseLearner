@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebaselearner/screens/home_screen.dart';
 import 'package:firebaselearner/screens/login_screen.dart';
 import 'package:firebaselearner/screens/register_screen.dart';
+import 'package:firebaselearner/screens/upload_image.dart';
 import 'package:firebaselearner/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         stream: AuthServices().firebaseAuth.authStateChanges(),
         builder: (context,snapshot){
           if(snapshot.hasData ){
-            return HomeScreen(snapshot.data);
+          //  return HomeScreen(snapshot.data);
+            return UploadImage();
           }
           return RegisterScreen();
         },
